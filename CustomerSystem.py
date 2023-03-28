@@ -54,10 +54,33 @@ def generateCustomerDataFile():
 ####################################################################
 #       ADDITIONAL METHODS MAY BE ADDED BELOW IF NECESSARY         #
 ####################################################################
+CustFirstName = input("Type the Customer's first name:")
+CustLastName = input("Type the Customer's LAst Name:")
+  
+sumOddDigits = 0
+sumEvenDigits = 0
+stotal = 0
+cardNumber = input("Enter a credit card #:")
+cardNumber = [::-1]
+print(cardNumber)
 
+for x in cardNumber[::]:
+  sumOddDigits += int(x)
 
+for x in cardNumber[1::2]:
+  x = int(x) * 2
+  if x >= 10:
+    sumEvenDigits += (1 + (x % 10))
+  else:
+    sumEvenDigits += x
 
+  total = sumOddDigits + sumEvenDigits
 
+  if total % 10 == 0:
+    print("valid")
+  else:
+    print("invalid")
+ 
 ####################################################################
 #                            MAIN PROGRAM                          #
 #           DO NOT EDIT ANY CODE EXCEPT WHERE INDICATED            #
