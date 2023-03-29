@@ -34,8 +34,25 @@ CustCCard = input("type the customer's Credit Card:")
     This function may also be broken down further depending on your algorithm/approach
 '''
 def validatePostalCode():
- file = open("postal_codes.csv", "r")
-  print("The customer's postal code,", CustPCode, "is valid.")
+file = open("postal_codes.csv", "r")
+  
+postalCodesFile = open("postal_codes.csv", "r")
+postalCodes = postal_codes_file.read().splitlines()
+
+print(CustPCode)
+
+
+valid = False
+for code in postal_codes:
+    if CustPCode == code:
+        valid = True
+        break
+
+if valid:
+    print("The customer's postal code,", CustPCode, "is valid.")
+else:
+    print("The postal code", CustPCode, "is invalid.")
+
 
 '''
     This function is to be edited to achieve the task.
