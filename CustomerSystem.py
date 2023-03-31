@@ -21,8 +21,7 @@ def printMenu():
 def validatePostalCode(CustPCode):
   postalCodesFile = open("postal_codes.csv", "r")
   postalCodes = postalCodesFile.read().splitlines()
-  print(CustPCode)
-#ckeck validation
+#ckeck validation, the 3 only checks the first 3 digits
   valid = False
   for code in postalCodes:
       if CustPCode == code[:3]:
@@ -41,14 +40,14 @@ def validatePostalCode(CustPCode):
     This function may also be broken down further depending on your algorithm/approach
 '''
 def validateCreditCard():
-
+#declare variables
   sumOddDigits = 0
   sumEvenDigits = 0
   total = 0
   cardNumber = input("Enter a credit card #:")
   cardNumber = cardNumber[::-1]
   print(cardNumber)
-    
+
   for x in cardNumber[::]:
     sumOddDigits += int(x)
   
@@ -70,15 +69,18 @@ def validateCreditCard():
 
 def generateCustomerDataFile():
   folder = os.getcwd()
-  fileName = folder + "\\compsci 11\\CustomerInfo.txt"
+  
+  fileName = input("Generating new customer file.../nWhat do you want to name this file?")
+  folderName = input("Which existing folder would you like to assign the file to?")
+  fileCreateNew = folder + "\\(folderName)\\(fileName).txt"
   file = open("fileName", "w")
-  file.writelines("NEW CUSTOMER\n-----------")
+  file.writelines("NEW CUSTOMER INFO IN FOLDER",(folderName),"\n-----------")
   file.writelines("First Name:", CustFirstName)
   file.writelines("Last Name:", CustLastName)
   file.writelines("City:", CustCity)
   file.writelines("Postal Code", CustPCode)
   file.writelines("Credit Card Number:", CustCCard)
-
+  file.close()
 
 def enterCustomerInfo():
 #its at the bottom because you can't call functions that haven't exist yet so its at the bottom
