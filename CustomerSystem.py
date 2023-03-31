@@ -3,6 +3,7 @@
 # created yourself
 
 # More packages may be imported in the space below if approved by your instructor
+import os
 
 def printMenu():
     print('''
@@ -15,45 +16,24 @@ def printMenu():
           Enter menu option (1-9)
           ''')
 
-'''
-    This function is to be edited to achieve the task.
-    It is your decision to make this function a procedural or functional type
-    You may place as many or as few parameters as needed
-    This function may also be broken down further depending on your algorithm/approach
-'''
-def enterCustomerInfo():
-CustFirstName = input("Type the Customer's first name:")
-CustLastName = input("Type the Customer's LAst Name:")
-CustPCode = input("Type the customer's Postal Code:")
-CustCCard = input("type the customer's Credit Card:")
 
-'''
-    This function is to be edited to achieve the task.
-    It is your decision to make this function a procedural or functional type
-    You may place as many or as few parameters as needed
-    This function may also be broken down further depending on your algorithm/approach
-'''
-def validatePostalCode():
-file = open("postal_codes.csv", "r")
+#define and open file
+def validatePostalCode(CustPCode):
+  postalCodesFile = open("postal_codes.csv", "r")
+  postalCodes = postalCodesFile.read().splitlines()
+  print(CustPCode)
+#ckeck validation
+  valid = False
+  for code in postalCodes:
+      if CustPCode == code[:3]:
+          valid = True
+          break
+  #print
+  if valid:
+      print("The customer's postal code,", CustPCode, "is valid.")
+  else:
+      print("The postal code", CustPCode, "is invalid.")
   
-postalCodesFile = open("postal_codes.csv", "r")
-postalCodes = postal_codes_file.read().splitlines()
-
-print(CustPCode)
-
-
-valid = False
-for code in postal_codes:
-    if CustPCode == code:
-        valid = True
-        break
-
-if valid:
-    print("The customer's postal code,", CustPCode, "is valid.")
-else:
-    print("The postal code", CustPCode, "is invalid.")
-
-
 '''
     This function is to be edited to achieve the task.
     It is your decision to make this function a procedural or functional type
@@ -65,37 +45,51 @@ def validateCreditCard():
   sumOddDigits = 0
   sumEvenDigits = 0
   total = 0
-cardNumber = input("Enter a credit card #:")
-cardNumber = [::-1]
-print(cardNumber)
-
-for x in cardNumber[::]:
-  sumOddDigits += int(x)
-
-for x in cardNumber[1::2]:
-  x = int(x) * 2
-  if x >= 10:
-    sumEvenDigits += (1 + (x % 10))
-  else:
-    sumEvenDigits += x
-
-  total = sumOddDigits + sumEvenDigits
-
-  if total % 10 == 0:
-    print("valid")
-  else:
-    print("invalid")
- 
-
+  cardNumber = input("Enter a credit card #:")
+  cardNumber = cardNumber[::-1]
+  print(cardNumber)
+    
+  for x in cardNumber[::]:
+    sumOddDigits += int(x)
   
-'''
-    This function is to be edited to achieve the task.
-    It is your decision to make this function a procedural or functional type
-    You may place as many or as few parameters as needed
-    This function may also be broken down further depending on your algorithm/approach
-'''
+  for x in cardNumber[1::2]:
+    x = int(x) * 2
+    if x >= 10:
+      sumEvenDigits += (1 + (x % 10))
+    else:
+      sumEvenDigits += x
+  
+    total = sumOddDigits + sumEvenDigits
+  
+    if total % 10 == 0:
+      print("valid")
+    else:
+      print("invalid, try again")
+   
+
+
 def generateCustomerDataFile():
-    pass    # Remove this pass statement and add your own code below
+  folder = os.getcwd()
+  fileName = folder + "\\compsci 11\\CustomerInfo.txt"
+  file = open("fileName", "w")
+  file.writelines("NEW CUSTOMER\n-----------")
+  file.writelines("First Name:", CustFirstName)
+  file.writelines("Last Name:", CustLastName)
+  file.writelines("City:", CustCity)
+  file.writelines("Postal Code", CustPCode)
+  file.writelines("Credit Card Number:", CustCCard)
+
+
+def enterCustomerInfo():
+#its at the bottom because you can't call functions that haven't exist yet so its at the bottom
+  CustFirstName = input("Type the Customer's first name:")
+  CustLastName = input("Type the Customer's last Name:")
+  CustCity = input("enter customer's city name")
+  CustPCode = input("Type the customer's Postal Code:")
+  validatePostalCode(CustPCode.upper())
+  CustCCard = int(input("type the customer's Credit Card:"))
+  
+    # Remove this pass statement and add your own code below
 
 ####################################################################
 #       ADDITIONAL METHODS MAY BE ADDED BELOW IF NECESSARY         #
@@ -105,7 +99,7 @@ def generateCustomerDataFile():
 #                            MAIN PROGRAM                          #
 #           DO NOT EDIT ANY CODE EXCEPT WHERE INDICATED            #
 ####################################################################
-'''
+
 # Do not edit any of these variables
 userInput = ""
 enterCustomerOption = "1"
@@ -133,4 +127,3 @@ while userInput != exitCondition:
 
 #Exits once the user types 
 print("Program Terminated")
-'''
