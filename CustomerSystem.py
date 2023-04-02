@@ -1,3 +1,4 @@
+#
 # Throughout this project, the use of data structures are not permitted 
 # Minimal built in functions are to be used and the majority of functions must be
 # created yourself
