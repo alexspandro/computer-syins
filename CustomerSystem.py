@@ -4,6 +4,12 @@
 
 # More packages may be imported in the space below if approved by your instructor
 import os
+#creates global variable
+CustFirstName = ""
+CustLastName = ""
+CustCity = ""
+CustPCode = ""
+CustCCard = ""
 
 def printMenu():
     print('''
@@ -17,20 +23,21 @@ def printMenu():
           ''')
 
 def enterCustomerInfo():
-#its at the bottom because you can't call functions that haven't exist yet so its at the bottom
-  CustFirstName = input("Type the Customer's first name:")
-  CustLastName = input("Type the Customer's last Name:")
-  CustCity = input("enter customer's city name")
-  CustPCode = input("Type the customer's Postal Code:")
+#lets code know to make variables global
+  global CustFirstName, CustLastName, CustCity, CustPCode, CustCCard
+  CustFirstName = input("Type the Customer's first name: ")
+  CustLastName = input("Type the Customer's last Name: ")
+  CustCity = input("enter customer's city name: ")
+  CustPCode = input("Type the customer's Postal Code: ")
   validatePostalCode(CustPCode.upper())
-  CustCCard = (input("type the customer's Credit Card:"))
+  CustCCard = (input("type the customer's Credit Card: "))
   validateCreditCard(CustCCard)
-  
+#lets code know to use variable CustCCard when validating
 #define and open file
 def validatePostalCode(CustPCode):
   postalCodesFile = open("postal_codes.csv", "r")
   postalCodes = postalCodesFile.read().splitlines()
-#ckeck validation, the 3 only checks the first 3 digits
+#check validation, the 3 only checks the first 3 digits
   valid = False
   for code in postalCodes:
       if CustPCode == code[:3]:
@@ -38,71 +45,59 @@ def validatePostalCode(CustPCode):
           break
   #print
   if valid:
-      print("The customer's postal code,", CustPCode, "is valid.")
+      print("POSTAL CODE ENTERED IS VALID.")
   else:
-      print("The postal code", CustPCode, "is invalid.")
+      print("INVALID POSTAL CODE ENTERED")
   
-'''
-    This function is to be edited to achieve the task.
-    It is your decision to make this function a procedural or functional type
-    You may place as many or as few parameters as needed
-    This function may also be broken down further depending on your algorithm/approach
-'''
+
 def validateCreditCard(CustCCard):
-#declare variables
-  sumOddDigits = 0
-  sumEvenDigits = 0
-  total = 0
-  cardNumber = input("Enter a credit card #:")
-  cardNumber = cardNumber.replace("-", "")
-  cardNumber = cardNumber.replace(" ", "")
-  cardNumber = cardNumber[::-1]
-
-  for x in cardNumber[::2]:
-    sumOddDigits += int(x)
-  
-  for x in cardNumber[1::2]:
-    x = int(x) * 2
-    if x >= 10:
-      sumEvenDigits += (1 + (x % 10))
-    else:
-      sumEvenDigits += x
-  
+    # declare variables
+    sumOddDigits = 0
+    sumEvenDigits = 0
+    total = 0
+#removes spaces or hyphens in the code and reverses the number inputted
+    CustCCard = CustCCard.replace("-", "")
+    CustCCard = CustCCard.replace(" ", "")
+    CustCCard = CustCCard[::-1]
+#makes sure that the number follows credit card rules
+#and makes sure the number is divisible by 10 and adds the total of odd and even numbers
+    for x in CustCCard[::2]:
+        sumOddDigits += int(x)
+    for x in CustCCard[1::2]:
+        x = int(x) * 2
+        if x >= 10:
+            sumEvenDigits += (1 + (x % 10))
+        else:
+            sumEvenDigits += x
     total = sumOddDigits + sumEvenDigits
-  
-    if total % 10 == 0:
-      print("valid")
-    else:
-      print("invalid, try again")
-   
 
+    if total % 10 == 0:
+        print("CREDIT CARD NUMBER IS VALID.")
+    else:
+        print("INVALID CREDIT CARD NUMBER ENTERED")
 
 def generateCustomerDataFile():
-  folder = os.getcwd()
-  
-  fileName = input("Generating new customer file...\nWhat do you want to name this file?")
-  folderName = input("Which existing folder would you like to assign the file to?")
-  fileCreateNew = folder + "\\(folderName)\\(fileName).csv"
-  file = open("fileName", "w")
-  file.writelines("NEW CUSTOMER INFO IN FOLDER")
-  file.writelines("First Name:", CustFirstName)
-  file.writelines("Last Name:", CustLastName)
-  file.writelines("City", CustCity)
-  file.writelines("Postal Code", CustPCode)
-  file.writelines("Credit Card Number", cardNumber)
-  file.close()
-'''
-def enterCustomerInfo():
-#its at the bottom because you can't call functions that haven't exist yet so its at the bottom
-  CustFirstName = input("Type the Customer's first name:")
-  CustLastName = input("Type the Customer's last Name:")
-  CustCity = input("enter customer's city name")
-  CustPCode = input("Type the customer's Postal Code:")
-  validatePostalCode(CustPCode.upper())
-  CustCCard = (input("type the customer's Credit Card:"))
-  validateCreditCard(CustCCard)
-'''
-    # Remove this pass statement and add your own code below
+    folder = os.getcwd()
+#get current working directory with a custom file name and an existing folder
+    fileName = input("Generating new customer file...\nWhat do you want to name this file? ")
+    folderName = input("Which existing folder would you like to assign the file to? ")
+    fileCreateNew = folder + folderName + "\\" + fileName + ".txt"
+#file is set to nothing to show if the file wasn't edited successfully
+    file = ("")
+    try:
+#file is opened, written on, and closed
+        file = open(fileName, "w")
+        file.writelines("NEW CUSTOMER PROFILE\n-------------")
+        file.writelines("First Name: " + CustFirstName + "\n")
+        file.writelines("Last Name: " + CustLastName + "\n")
+        file.writelines("City: " + CustCity + "\n")
+        file.writelines("Postal Code: " + CustPCode + "\n")
+        file.writelines("Credit Card Number: " + CustCCard + "\n")
+        print("FILE SAVED IN FOLDER:", folderName)
+    finally:
+        if file:
+            file.close()
+        
 
 ####################################################################
 #       ADDITIONAL METHODS MAY BE ADDED BELOW IF NECESSARY         #
@@ -140,3 +135,5 @@ while userInput != exitCondition:
 
 #Exits once the user types 
 print("Program Terminated")
+
+#374245455400126
